@@ -3,7 +3,7 @@
 # Dependencies: jgmenu, xdotool, xcolor, gcolor3, gpick, pastel, xdg-utils, xclip, notify-send
 # TODO export to .gpl (GIMP,Inkscape)
 
-VERSION="0.9.9"
+VERSION="0.9.8"
 TEMP_DIR=/tmp/colormenu
 ME=${0##*/}
 
@@ -21,7 +21,7 @@ format=hex
 #Action when color is clicked: paste (imadietely) or copy (to clipboard)
 action=copy
 #What thing to expose on top of main menu: recently picked colors, last used colors or last used palette
-expose=picked
+expose=wallpaper
 #Show HTML colors? yes|no
 htmlcolors=yes
 #Color picker (gpick or xcolor)
@@ -202,6 +202,7 @@ case $LANG in
     pl*)
     COLORMENU="Menu kolorów"
     COPY_COLOR_CODE="Kopiuj kod koloru"
+    ACTION="Działanie"
     COLLECT_COLORS="Dodaj kolory"
     PICK_FROM_SCREEN="<b>Pobierz</b> kolor z ekranu..."
     ADD_FROM_SELECTOR="<b>Dodaj</b> kolor..."
@@ -230,6 +231,7 @@ case $LANG in
     *)
     COLORMENU="ColorMenu"
     COPY_COLOR_CODE="Copy Color Code"
+    ACTION="Action"
     COLLECT_COLORS="Collect Colors"
     PICK_FROM_SCREEN="<b>Pick</b> color from screen..."
     ADD_FROM_SELECTOR="<b>Add</b> color from selector..."
@@ -280,7 +282,7 @@ out+=("$ADD_FROM_SELECTOR,$ME addcolor")
 fi
 
 
-out+=("^sep($COPY_COLOR_CODE...<sup> [$action $format]</sup>)")
+out+=("^sep($ACTION: [$action $format])")
 # exposed thing
 case "$expose" in
     palette)
@@ -541,7 +543,7 @@ out2+=("<tt>$(printf "%-20s %20s" "$CLICK_ACTION" "[<b>$action</b>]")</tt>,^chec
 out2+=("<tt>$(printf "%-20s %20s" "Format:" "[<b>$format</b>]")</tt>,^checkout(format)")
 out2+=("^sep()")
 out2+=("<tt>$(printf "%-20s %20s" "$EXPOSE" "[<b>$expose</b>]")</tt>,^checkout(expose)")
-out2+=("<tt>$(printf "%-20s %20s" "$HTMLCOLORS:" "[<b>$htmlcolors</b>]")</tt>,^checkout(showhtml)")
+out2+=("<tt>$(printf "%-20s %20s" "$HTMLCOLORS" "[<b>$htmlcolors</b>]")</tt>,^checkout(showhtml)")
 out2+=("<tt>$(printf "%-20s %20s" "$BUILTIN" "[<b>$builtin_palettes</b>]")</tt>,^checkout(builtinpalettes)")
 out2+=("<tt>$(printf "%-20s %20s" "$PICKER" "[<b>$picker</b>]")</tt>,^checkout(picker)")
 out2+=("^sep()")
