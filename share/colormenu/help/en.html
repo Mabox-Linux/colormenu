@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<title>Mabox Color Menu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./css/w3.css">
+<style>
+body{
+background-color:#222222;
+color: #909090  
+}
+div.fixed {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 200px;
+}
+div.fixeddown {
+    position: fixed;
+    bottom:0;
+    right:0;
+}
+</style>
+<body>
+
+<div class="w3-sidebar w3-bar-block w3-dark-grey w3-card" style="width:160px">
+<div class="w3-center w3-margin"><img src="./img/colormenu.png" onclick="openTab(event, 'ColorMenu')"></div>
+  <button class="w3-bar-item w3-button w3-small tablink" onclick="openTab(event, 'ColorMenu')">ColorMenu</button>
+  <button class="w3-bar-item w3-button w3-small tablink" onclick="openTab(event, 'Collect')">Collecting Colors</button>
+  <button class="w3-bar-item w3-button w3-small tablink" onclick="openTab(event, 'Copy')">Color codes</button>
+  <button class="w3-bar-item w3-button w3-small tablink" onclick="openTab(event, 'Palette')">Palette Management</button>
+  <button class="w3-bar-item w3-button w3-small tablink" onclick="openTab(event, 'Wallpaper')">Wallpaper Colors</button>
+  <button class="w3-bar-item w3-button w3-small tablink" onclick="openTab(event, 'Imagick')">ImageMagick colors</button>
+  <button class="w3-bar-item w3-button w3-small tablink" onclick="openTab(event, 'Settings')">Settings</button>
+  
+</div>
+
+<div style="margin-left:160px;" class="w3-small">
+ 
+  <section id="ColorMenu" class="w3-container tab" style="min-height:100vh;">
+  
+  <div class="w3-container">
+  <h2>Color Menu</h2>
+  <p>an unusual tool that can help you work with colors</p>
+  <i>development version</i>
+  <p><ul><li>collect colors from the screen and manage palettes</li>
+  <li>copy or paste color codes (hex, rgb or rgba)</li>
+  <li>autogenarate  color palette from current wallpaper</li></ul>
+  </p>
+  <a class="w3-button w3-round w3-tiny w3-lime w3-margin" href="run://colormenu">Launch Color Menu</a>
+  </div>
+  <div class="fixeddown">
+      <div class="w3-bar w3-tiny">
+          <div class="w3-bar-item">Mabox Linux Links:</div>
+  <a href="https://maboxlinux.org" class="w3-bar-item w3-hover-green">www</a>
+  <a href="https://forum.maboxlinux.org" class="w3-bar-item w3-hover-green">forum</a>
+  <a href="https://manual.maboxlinux.org/en" class="w3-bar-item w3-hover-green">manual</a>
+  <a href="https://ko-fi.com/maboxlinux" class="w3-bar-item w3-hover-green">donate</a>
+</div>
+</div>
+  </section>
+
+ 
+  <section id="Collect" class="w3-container tab" style="display:none;min-height:100vh;">
+   <div class="fixed"><a class="w3-button w3-round w3-tiny w3-lime w3-margin" href="run://colormenu">Launch Color Menu</a></div>
+    <h2>Collecting colors</h2>
+    <p></p>
+  </section>
+  <section id="Copy" class="w3-container tab" style="display:none;min-height:100vh">
+    <div class="fixed"><a class="w3-button w3-round w3-tiny w3-lime w3-margin" href="run://colormenu">Launch Color Menu</a></div>
+    <h2>Copy or paste color codes</h2>
+  <p>By clicking on color in Color Menu you can <strong>copy</strong> or <strong>paste</strong> color code in needed format - depending how Colormenu is configured.</p>
+  <h4>Actions</h4>
+  <table class="w3-table w3-bordered w3-dark-grey w3-small">
+<tr class="w3-teal">
+      <th>Action</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><a class="w3-btn w3-yellow w3-tiny" href="run://colormenu setvar action=copy">Copy</a></td>
+      <td>copy color code to the clipboard</td>
+    </tr>
+    <tr>
+      <td><a class="w3-btn w3-yellow w3-tiny" href="run://colormenu setvar action=paste">Paste</a></td>
+      <td>paste color code immadietely in cursor position</td>
+    </tr>
+    </table>
+
+  
+  <h4>Formats</h4>
+    <table class="w3-table w3-bordered w3-dark-grey w3-small">
+<tr class="w3-teal">
+      <th>Format</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><a class="w3-btn w3-yellow w3-tiny" href="run://colormenu setvar format=hex">hex</a></td>
+      <td>hexadecimal <em>#4e8cd6</em></td>
+    </tr>
+    <tr>
+      <td><a class="w3-btn w3-yellow w3-tiny" href="run://colormenu setvar format=rgb">rgb</a></td>
+      <td>rgb <em>rgb(78, 140, 214)</em></td>
+    </tr>
+      <tr>
+      <td><a class="w3-btn w3-yellow w3-tiny" href="run://colormenu setvar format=rgba">rgba</a></td>
+      <td>rgba<em>rgba(78, 140, 214, 1.0)</em></td>
+    </tr>
+    </table>
+
+  </section>
+  <section id="Palette" class="w3-container tab" style="display:none;min-height:100vh">
+    <div class="fixed"><a class="w3-button w3-round w3-tiny w3-lime w3-margin" href="run://colormenu">Launch Color Menu</a></div>
+    <h2>Palette management</h2>
+    <p>Color Menu comes with several built-in color palettes.</p><p> It also generates color palette from currently used wallpaper automatically.</p>
+    <p>You can create additional own palettes from colors picked from screen or image.</p>
+
+<h4>Pallette format</h4>
+  </section>
+   </section>
+  <section id="Wallpaper" class="w3-container tab" style="display:none;min-height:100vh">
+      <div class="fixed"><a class="w3-button w3-round w3-tiny w3-lime w3-margin" href="run://colormenu">Launch Color Menu</a></div>
+    <h2>Wallpaper Colors</h2>
+    <p></p>
+  </section>
+ </section>
+  <section id="Imagick" class="w3-container tab" style="display:none;min-height:100vh">
+    <div class="fixed"><a class="w3-button w3-round w3-tiny w3-lime w3-margin w3-display-topright" href="run://colormenu imagick">Launch ImageMagick colors selector</a></div>
+    <h2>ImageMagick colors selector</h2>
+    <p>ImageMagick colors selector let you pick color codes from a list of named colors recognized by ImageMagick.</p>
+  </section>
+    <section id="Settings" class="w3-container tab" style="display:none;min-height:100vh">
+    <h2>Settings</h2>
+    <p> </p>
+  </section>
+</div>
+
+<script>
+function openTab(evt, tabName) {
+  var i, x, tablinks;
+  x = document.getElementsByClassName("tab");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < x.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" w3-gray", ""); 
+  }
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " w3-gray";
+}
+function myFunction() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
+</body>
+</html>
+

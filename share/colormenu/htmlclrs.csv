@@ -1,0 +1,161 @@
+^tag(white)
+^sep(White colors)
+<tt><span bgcolor='#FFFFFF' fgcolor='#111111'><sub> </sub>#FFFFFF<sup>                 white </sup></span></tt>,colormenu getcolorcode '#FFFFFF',,,#white
+<tt><span bgcolor='#FFFAFA' fgcolor='#111111'><sub> </sub>#FFFAFA<sup>                  snow </sup></span></tt>,colormenu getcolorcode '#FFFAFA',,,#white
+<tt><span bgcolor='#F0FFF0' fgcolor='#111111'><sub> </sub>#F0FFF0<sup>              honeydew </sup></span></tt>,colormenu getcolorcode '#F0FFF0',,,#white
+<tt><span bgcolor='#F5FFFA' fgcolor='#111111'><sub> </sub>#F5FFFA<sup>             mintcream </sup></span></tt>,colormenu getcolorcode '#F5FFFA',,,#white
+<tt><span bgcolor='#F0FFFF' fgcolor='#111111'><sub> </sub>#F0FFFF<sup>                 azure </sup></span></tt>,colormenu getcolorcode '#F0FFFF',,,#white
+<tt><span bgcolor='#F0F8FF' fgcolor='#111111'><sub> </sub>#F0F8FF<sup>             aliceblue </sup></span></tt>,colormenu getcolorcode '#F0F8FF',,,#white
+<tt><span bgcolor='#F8F8FF' fgcolor='#111111'><sub> </sub>#F8F8FF<sup>            ghostwhite </sup></span></tt>,colormenu getcolorcode '#F8F8FF',,,#white
+<tt><span bgcolor='#F5F5F5' fgcolor='#111111'><sub> </sub>#F5F5F5<sup>            whitesmoke </sup></span></tt>,colormenu getcolorcode '#F5F5F5',,,#white
+<tt><span bgcolor='#FFF5EE' fgcolor='#111111'><sub> </sub>#FFF5EE<sup>              seashell </sup></span></tt>,colormenu getcolorcode '#FFF5EE',,,#white
+<tt><span bgcolor='#F5F5DC' fgcolor='#111111'><sub> </sub>#F5F5DC<sup>                 beige </sup></span></tt>,colormenu getcolorcode '#F5F5DC',,,#white
+<tt><span bgcolor='#FDF5E6' fgcolor='#111111'><sub> </sub>#FDF5E6<sup>               oldlace </sup></span></tt>,colormenu getcolorcode '#FDF5E6',,,#white
+<tt><span bgcolor='#FFFAF0' fgcolor='#111111'><sub> </sub>#FFFAF0<sup>           floralwhite </sup></span></tt>,colormenu getcolorcode '#FFFAF0',,,#white
+<tt><span bgcolor='#FFFFF0' fgcolor='#111111'><sub> </sub>#FFFFF0<sup>                 ivory </sup></span></tt>,colormenu getcolorcode '#FFFFF0',,,#white
+<tt><span bgcolor='#FAEBD7' fgcolor='#111111'><sub> </sub>#FAEBD7<sup>          antiquewhite </sup></span></tt>,colormenu getcolorcode '#FAEBD7',,,#white
+<tt><span bgcolor='#FAF0E6' fgcolor='#111111'><sub> </sub>#FAF0E6<sup>                 linen </sup></span></tt>,colormenu getcolorcode '#FAF0E6',,,#white
+<tt><span bgcolor='#FFF0F5' fgcolor='#111111'><sub> </sub>#FFF0F5<sup>         lavenderblush </sup></span></tt>,colormenu getcolorcode '#FFF0F5',,,#white
+<tt><span bgcolor='#FFE4E1' fgcolor='#111111'><sub> </sub>#FFE4E1<sup>             mistyrose </sup></span></tt>,colormenu getcolorcode '#FFE4E1',,,#white
+^tag(yellow)
+^sep(Yellow colors)
+<tt><span bgcolor='#FFFFE0' fgcolor='#111111'><sub> </sub>#FFFFE0<sup>           lightyellow </sup></span></tt>,colormenu getcolorcode '#FFFFE0',,,#yellow
+<tt><span bgcolor='#FFFACD' fgcolor='#111111'><sub> </sub>#FFFACD<sup>          lemonchiffon </sup></span></tt>,colormenu getcolorcode '#FFFACD',,,#yellow
+<tt><span bgcolor='#FAFAD2' fgcolor='#111111'><sub> </sub>#FAFAD2<sup>  lightgoldenrodyellow </sup></span></tt>,colormenu getcolorcode '#FAFAD2',,,#yellow
+<tt><span bgcolor='#FFEFD5' fgcolor='#111111'><sub> </sub>#FFEFD5<sup>            papayawhip </sup></span></tt>,colormenu getcolorcode '#FFEFD5',,,#yellow
+<tt><span bgcolor='#FFE4B5' fgcolor='#111111'><sub> </sub>#FFE4B5<sup>              moccasin </sup></span></tt>,colormenu getcolorcode '#FFE4B5',,,#yellow
+<tt><span bgcolor='#FFDAB9' fgcolor='#111111'><sub> </sub>#FFDAB9<sup>             peachpuff </sup></span></tt>,colormenu getcolorcode '#FFDAB9',,,#yellow
+<tt><span bgcolor='#EEE8AA' fgcolor='#111111'><sub> </sub>#EEE8AA<sup>         palegoldenrod </sup></span></tt>,colormenu getcolorcode '#EEE8AA',,,#yellow
+<tt><span bgcolor='#F0E68C' fgcolor='#111111'><sub> </sub>#F0E68C<sup>                 khaki </sup></span></tt>,colormenu getcolorcode '#F0E68C',,,#yellow
+<tt><span bgcolor='#BDB76B' fgcolor='#111111'><sub> </sub>#BDB76B<sup>             darkkhaki </sup></span></tt>,colormenu getcolorcode '#BDB76B',,,#yellow
+<tt><span bgcolor='#FFFF00' fgcolor='#111111'><sub> </sub>#FFFF00<sup>                yellow </sup></span></tt>,colormenu getcolorcode '#FFFF00',,,#yellow
+^tag(orange)
+^sep(Orange colors)
+<tt><span bgcolor='#FF7F50' fgcolor='#111111'><sub> </sub>#FF7F50<sup>                 coral </sup></span></tt>,colormenu getcolorcode '#FF7F50',,,#orange
+<tt><span bgcolor='#FF6347' fgcolor='#EEEEEE'><sub> </sub>#FF6347<sup>                tomato </sup></span></tt>,colormenu getcolorcode '#FF6347',,,#orange
+<tt><span bgcolor='#FF4500' fgcolor='#EEEEEE'><sub> </sub>#FF4500<sup>             orangered </sup></span></tt>,colormenu getcolorcode '#FF4500',,,#orange
+<tt><span bgcolor='#FFD700' fgcolor='#111111'><sub> </sub>#FFD700<sup>                  gold </sup></span></tt>,colormenu getcolorcode '#FFD700',,,#orange
+<tt><span bgcolor='#FFA500' fgcolor='#111111'><sub> </sub>#FFA500<sup>                orange </sup></span></tt>,colormenu getcolorcode '#FFA500',,,#orange
+<tt><span bgcolor='#FF8C00' fgcolor='#111111'><sub> </sub>#FF8C00<sup>            darkorange </sup></span></tt>,colormenu getcolorcode '#FF8C00',,,#orange
+^tag(pink)
+^sep(Pink colors)
+<tt><span bgcolor='#FFC0CB' fgcolor='#111111'><sub> </sub>#FFC0CB<sup>                  pink </sup></span></tt>,colormenu getcolorcode '#FFC0CB',,,#pink
+<tt><span bgcolor='#FFB6C1' fgcolor='#111111'><sub> </sub>#FFB6C1<sup>             lightpink </sup></span></tt>,colormenu getcolorcode '#FFB6C1',,,#pink
+<tt><span bgcolor='#FF69B4' fgcolor='#111111'><sub> </sub>#FF69B4<sup>               hotpink </sup></span></tt>,colormenu getcolorcode '#FF69B4',,,#pink
+<tt><span bgcolor='#FF1493' fgcolor='#EEEEEE'><sub> </sub>#FF1493<sup>              deeppink </sup></span></tt>,colormenu getcolorcode '#FF1493',,,#pink
+<tt><span bgcolor='#DB7093' fgcolor='#EEEEEE'><sub> </sub>#DB7093<sup>         palevioletred </sup></span></tt>,colormenu getcolorcode '#DB7093',,,#pink
+<tt><span bgcolor='#C71585' fgcolor='#EEEEEE'><sub> </sub>#C71585<sup>       mediumvioletred </sup></span></tt>,colormenu getcolorcode '#C71585',,,#pink
+^tag(red)
+^sep(Red colors)
+<tt><span bgcolor='#FFA07A' fgcolor='#111111'><sub> </sub>#FFA07A<sup>           lightsalmon </sup></span></tt>,colormenu getcolorcode '#FFA07A',,,#red
+<tt><span bgcolor='#FA8072' fgcolor='#111111'><sub> </sub>#FA8072<sup>                salmon </sup></span></tt>,colormenu getcolorcode '#FA8072',,,#red
+<tt><span bgcolor='#E9967A' fgcolor='#111111'><sub> </sub>#E9967A<sup>            darksalmon </sup></span></tt>,colormenu getcolorcode '#E9967A',,,#red
+<tt><span bgcolor='#F08080' fgcolor='#111111'><sub> </sub>#F08080<sup>            lightcoral </sup></span></tt>,colormenu getcolorcode '#F08080',,,#red
+<tt><span bgcolor='#CD5C5C' fgcolor='#EEEEEE'><sub> </sub>#CD5C5C<sup>             indianred </sup></span></tt>,colormenu getcolorcode '#CD5C5C',,,#red
+<tt><span bgcolor='#DC143C' fgcolor='#EEEEEE'><sub> </sub>#DC143C<sup>               crimson </sup></span></tt>,colormenu getcolorcode '#DC143C',,,#red
+<tt><span bgcolor='#B22222' fgcolor='#EEEEEE'><sub> </sub>#B22222<sup>             firebrick </sup></span></tt>,colormenu getcolorcode '#B22222',,,#red
+<tt><span bgcolor='#FF0000' fgcolor='#EEEEEE'><sub> </sub>#FF0000<sup>                   red </sup></span></tt>,colormenu getcolorcode '#FF0000',,,#red
+<tt><span bgcolor='#8B0000' fgcolor='#EEEEEE'><sub> </sub>#8B0000<sup>              darkreds </sup></span></tt>,colormenu getcolorcode '#8B0000',,,#red
+^tag(brown)
+^sep(Brown colors)
+<tt><span bgcolor='#FFF8DC' fgcolor='#111111'><sub> </sub>#FFF8DC<sup>              cornsilk </sup></span></tt>,colormenu getcolorcode '#FFF8DC',,,#brown
+<tt><span bgcolor='#FFEBCD' fgcolor='#111111'><sub> </sub>#FFEBCD<sup>        blanchedalmond </sup></span></tt>,colormenu getcolorcode '#FFEBCD',,,#brown
+<tt><span bgcolor='#FFE4C4' fgcolor='#111111'><sub> </sub>#FFE4C4<sup>                bisque </sup></span></tt>,colormenu getcolorcode '#FFE4C4',,,#brown
+<tt><span bgcolor='#FFDEAD' fgcolor='#111111'><sub> </sub>#FFDEAD<sup>           navajowhite </sup></span></tt>,colormenu getcolorcode '#FFDEAD',,,#brown
+<tt><span bgcolor='#F5DEB3' fgcolor='#111111'><sub> </sub>#F5DEB3<sup>                 wheat </sup></span></tt>,colormenu getcolorcode '#F5DEB3',,,#brown
+<tt><span bgcolor='#DEB887' fgcolor='#111111'><sub> </sub>#DEB887<sup>             burlywood </sup></span></tt>,colormenu getcolorcode '#DEB887',,,#brown
+<tt><span bgcolor='#D2B48C' fgcolor='#111111'><sub> </sub>#D2B48C<sup>                   tan </sup></span></tt>,colormenu getcolorcode '#D2B48C',,,#brown
+<tt><span bgcolor='#BC8F8F' fgcolor='#111111'><sub> </sub>#BC8F8F<sup>             rosybrown </sup></span></tt>,colormenu getcolorcode '#BC8F8F',,,#brown
+<tt><span bgcolor='#F4A460' fgcolor='#111111'><sub> </sub>#F4A460<sup>            sandybrown </sup></span></tt>,colormenu getcolorcode '#F4A460',,,#brown
+<tt><span bgcolor='#DAA520' fgcolor='#111111'><sub> </sub>#DAA520<sup>             goldenrod </sup></span></tt>,colormenu getcolorcode '#DAA520',,,#brown
+<tt><span bgcolor='#CD853F' fgcolor='#EEEEEE'><sub> </sub>#CD853F<sup>                  peru </sup></span></tt>,colormenu getcolorcode '#CD853F',,,#brown
+<tt><span bgcolor='#D2691E' fgcolor='#EEEEEE'><sub> </sub>#D2691E<sup>             chocolate </sup></span></tt>,colormenu getcolorcode '#D2691E',,,#brown
+<tt><span bgcolor='#8B4513' fgcolor='#EEEEEE'><sub> </sub>#8B4513<sup>           saddlebrown </sup></span></tt>,colormenu getcolorcode '#8B4513',,,#brown
+<tt><span bgcolor='#A0522D' fgcolor='#EEEEEE'><sub> </sub>#A0522D<sup>                sienna </sup></span></tt>,colormenu getcolorcode '#A0522D',,,#brown
+<tt><span bgcolor='#A52A2A' fgcolor='#EEEEEE'><sub> </sub>#A52A2A<sup>                 brown </sup></span></tt>,colormenu getcolorcode '#A52A2A',,,#brown
+<tt><span bgcolor='#800000' fgcolor='#EEEEEE'><sub> </sub>#800000<sup>                maroon </sup></span></tt>,colormenu getcolorcode '#800000',,,#brown
+^tag(green)
+^sep(Green colors)
+<tt><span bgcolor='#7CFC00' fgcolor='#111111'><sub> </sub>#7CFC00<sup>             lawngreen </sup></span></tt>,colormenu getcolorcode '#7CFC00',,,#green
+<tt><span bgcolor='#7FFF00' fgcolor='#111111'><sub> </sub>#7FFF00<sup>            chartreuse </sup></span></tt>,colormenu getcolorcode '#7FFF00',,,#green
+<tt><span bgcolor='#32CD32' fgcolor='#EEEEEE'><sub> </sub>#32CD32<sup>             limegreen </sup></span></tt>,colormenu getcolorcode '#32CD32',,,#green
+<tt><span bgcolor='#00FF00' fgcolor='#111111'><sub> </sub>#00FF00<sup>                  lime </sup></span></tt>,colormenu getcolorcode '#00FF00',,,#green
+<tt><span bgcolor='#228B22' fgcolor='#EEEEEE'><sub> </sub>#228B22<sup>           forestgreen </sup></span></tt>,colormenu getcolorcode '#228B22',,,#green
+<tt><span bgcolor='#008000' fgcolor='#EEEEEE'><sub> </sub>#008000<sup>                 green </sup></span></tt>,colormenu getcolorcode '#008000',,,#green
+<tt><span bgcolor='#006400' fgcolor='#EEEEEE'><sub> </sub>#006400<sup>             darkgreen </sup></span></tt>,colormenu getcolorcode '#006400',,,#green
+<tt><span bgcolor='#ADFF2F' fgcolor='#111111'><sub> </sub>#ADFF2F<sup>           greenyellow </sup></span></tt>,colormenu getcolorcode '#ADFF2F',,,#green
+<tt><span bgcolor='#9ACD32' fgcolor='#111111'><sub> </sub>#9ACD32<sup>           yellowgreen </sup></span></tt>,colormenu getcolorcode '#9ACD32',,,#green
+<tt><span bgcolor='#00FF7F' fgcolor='#111111'><sub> </sub>#00FF7F<sup>           springgreen </sup></span></tt>,colormenu getcolorcode '#00FF7F',,,#green
+<tt><span bgcolor='#00FA9A' fgcolor='#111111'><sub> </sub>#00FA9A<sup>     mediumspringgreen </sup></span></tt>,colormenu getcolorcode '#00FA9A',,,#green
+<tt><span bgcolor='#90EE90' fgcolor='#111111'><sub> </sub>#90EE90<sup>            lightgreen </sup></span></tt>,colormenu getcolorcode '#90EE90',,,#green
+<tt><span bgcolor='#98FB98' fgcolor='#111111'><sub> </sub>#98FB98<sup>             palegreen </sup></span></tt>,colormenu getcolorcode '#98FB98',,,#green
+<tt><span bgcolor='#8FBC8F' fgcolor='#111111'><sub> </sub>#8FBC8F<sup>          darkseagreen </sup></span></tt>,colormenu getcolorcode '#8FBC8F',,,#green
+<tt><span bgcolor='#3CB371' fgcolor='#EEEEEE'><sub> </sub>#3CB371<sup>        mediumseagreen </sup></span></tt>,colormenu getcolorcode '#3CB371',,,#green
+<tt><span bgcolor='#2E8B57' fgcolor='#EEEEEE'><sub> </sub>#2E8B57<sup>              seagreen </sup></span></tt>,colormenu getcolorcode '#2E8B57',,,#green
+<tt><span bgcolor='#808000' fgcolor='#EEEEEE'><sub> </sub>#808000<sup>                 olive </sup></span></tt>,colormenu getcolorcode '#808000',,,#green
+<tt><span bgcolor='#556B2F' fgcolor='#EEEEEE'><sub> </sub>#556B2F<sup>        darkolivegreen </sup></span></tt>,colormenu getcolorcode '#556B2F',,,#green
+<tt><span bgcolor='#6B8E23' fgcolor='#EEEEEE'><sub> </sub>#6B8E23<sup>             olivedrab </sup></span></tt>,colormenu getcolorcode '#6B8E23',,,#green
+^tag(cyan)
+^sep(Cyan colors)
+<tt><span bgcolor='#E0FFFF' fgcolor='#111111'><sub> </sub>#E0FFFF<sup>             lightcyan </sup></span></tt>,colormenu getcolorcode '#E0FFFF',,,#cyan
+<tt><span bgcolor='#00FFFF' fgcolor='#111111'><sub> </sub>#00FFFF<sup>                  cyan </sup></span></tt>,colormenu getcolorcode '#00FFFF',,,#cyan
+<tt><span bgcolor='#00FFFF' fgcolor='#111111'><sub> </sub>#00FFFF<sup>                  aqua </sup></span></tt>,colormenu getcolorcode '#00FFFF',,,#cyan
+<tt><span bgcolor='#7FFFD4' fgcolor='#111111'><sub> </sub>#7FFFD4<sup>            aquamarine </sup></span></tt>,colormenu getcolorcode '#7FFFD4',,,#cyan
+<tt><span bgcolor='#66CDAA' fgcolor='#111111'><sub> </sub>#66CDAA<sup>      mediumaquamarine </sup></span></tt>,colormenu getcolorcode '#66CDAA',,,#cyan
+<tt><span bgcolor='#AFEEEE' fgcolor='#111111'><sub> </sub>#AFEEEE<sup>         paleturquoise </sup></span></tt>,colormenu getcolorcode '#AFEEEE',,,#cyan
+<tt><span bgcolor='#40E0D0' fgcolor='#111111'><sub> </sub>#40E0D0<sup>             turquoise </sup></span></tt>,colormenu getcolorcode '#40E0D0',,,#cyan
+<tt><span bgcolor='#48D1CC' fgcolor='#111111'><sub> </sub>#48D1CC<sup>       mediumturquoise </sup></span></tt>,colormenu getcolorcode '#48D1CC',,,#cyan
+<tt><span bgcolor='#00CED1' fgcolor='#EEEEEE'><sub> </sub>#00CED1<sup>         darkturquoise </sup></span></tt>,colormenu getcolorcode '#00CED1',,,#cyan
+<tt><span bgcolor='#20B2AA' fgcolor='#EEEEEE'><sub> </sub>#20B2AA<sup>         lightseagreen </sup></span></tt>,colormenu getcolorcode '#20B2AA',,,#cyan
+<tt><span bgcolor='#5F9EA0' fgcolor='#EEEEEE'><sub> </sub>#5F9EA0<sup>             cadetblue </sup></span></tt>,colormenu getcolorcode '#5F9EA0',,,#cyan
+<tt><span bgcolor='#008B8B' fgcolor='#EEEEEE'><sub> </sub>#008B8B<sup>              darkcyan </sup></span></tt>,colormenu getcolorcode '#008B8B',,,#cyan
+<tt><span bgcolor='#008080' fgcolor='#EEEEEE'><sub> </sub>#008080<sup>                  teal </sup></span></tt>,colormenu getcolorcode '#008080',,,#cyan
+^tag(blue)
+^sep(Blue colors)
+<tt><span bgcolor='#B0E0E6' fgcolor='#111111'><sub> </sub>#B0E0E6<sup>            powderblue </sup></span></tt>,colormenu getcolorcode '#B0E0E6',,,#blue
+<tt><span bgcolor='#ADD8E6' fgcolor='#111111'><sub> </sub>#ADD8E6<sup>             lightblue </sup></span></tt>,colormenu getcolorcode '#ADD8E6',,,#blue
+<tt><span bgcolor='#87CEFA' fgcolor='#111111'><sub> </sub>#87CEFA<sup>          lightskyblue </sup></span></tt>,colormenu getcolorcode '#87CEFA',,,#blue
+<tt><span bgcolor='#87CEEB' fgcolor='#111111'><sub> </sub>#87CEEB<sup>               skyblue </sup></span></tt>,colormenu getcolorcode '#87CEEB',,,#blue
+<tt><span bgcolor='#00BFFF' fgcolor='#EEEEEE'><sub> </sub>#00BFFF<sup>           deepskyblue </sup></span></tt>,colormenu getcolorcode '#00BFFF',,,#blue
+<tt><span bgcolor='#B0C4DE' fgcolor='#111111'><sub> </sub>#B0C4DE<sup>        lightsteelblue </sup></span></tt>,colormenu getcolorcode '#B0C4DE',,,#blue
+<tt><span bgcolor='#1E90FF' fgcolor='#EEEEEE'><sub> </sub>#1E90FF<sup>            dodgerblue </sup></span></tt>,colormenu getcolorcode '#1E90FF',,,#blue
+<tt><span bgcolor='#6495ED' fgcolor='#EEEEEE'><sub> </sub>#6495ED<sup>        cornflowerblue </sup></span></tt>,colormenu getcolorcode '#6495ED',,,#blue
+<tt><span bgcolor='#4682B4' fgcolor='#EEEEEE'><sub> </sub>#4682B4<sup>             steelblue </sup></span></tt>,colormenu getcolorcode '#4682B4',,,#blue
+<tt><span bgcolor='#4169E1' fgcolor='#EEEEEE'><sub> </sub>#4169E1<sup>             royalblue </sup></span></tt>,colormenu getcolorcode '#4169E1',,,#blue
+<tt><span bgcolor='#0000FF' fgcolor='#EEEEEE'><sub> </sub>#0000FF<sup>                  blue </sup></span></tt>,colormenu getcolorcode '#0000FF',,,#blue
+<tt><span bgcolor='#0000CD' fgcolor='#EEEEEE'><sub> </sub>#0000CD<sup>            mediumblue </sup></span></tt>,colormenu getcolorcode '#0000CD',,,#blue
+<tt><span bgcolor='#00008B' fgcolor='#EEEEEE'><sub> </sub>#00008B<sup>              darkblue </sup></span></tt>,colormenu getcolorcode '#00008B',,,#blue
+<tt><span bgcolor='#000080' fgcolor='#EEEEEE'><sub> </sub>#000080<sup>                  navy </sup></span></tt>,colormenu getcolorcode '#000080',,,#blue
+<tt><span bgcolor='#191970' fgcolor='#EEEEEE'><sub> </sub>#191970<sup>          midnightblue </sup></span></tt>,colormenu getcolorcode '#191970',,,#blue
+<tt><span bgcolor='#7B68EE' fgcolor='#EEEEEE'><sub> </sub>#7B68EE<sup>       mediumslateblue </sup></span></tt>,colormenu getcolorcode '#7B68EE',,,#blue
+<tt><span bgcolor='#6A5ACD' fgcolor='#EEEEEE'><sub> </sub>#6A5ACD<sup>             slateblue </sup></span></tt>,colormenu getcolorcode '#6A5ACD',,,#blue
+<tt><span bgcolor='#483D8B' fgcolor='#EEEEEE'><sub> </sub>#483D8B<sup>         darkslateblue </sup></span></tt>,colormenu getcolorcode '#483D8B',,,#blue
+^tag(purple)
+^sep(Purple colors)
+<tt><span bgcolor='#E6E6FA' fgcolor='#111111'><sub> </sub>#E6E6FA<sup>              lavender </sup></span></tt>,colormenu getcolorcode '#E6E6FA',,,#purple
+<tt><span bgcolor='#D8BFD8' fgcolor='#111111'><sub> </sub>#D8BFD8<sup>               thistle </sup></span></tt>,colormenu getcolorcode '#D8BFD8',,,#purple
+<tt><span bgcolor='#DDA0DD' fgcolor='#111111'><sub> </sub>#DDA0DD<sup>                  plum </sup></span></tt>,colormenu getcolorcode '#DDA0DD',,,#purple
+<tt><span bgcolor='#EE82EE' fgcolor='#111111'><sub> </sub>#EE82EE<sup>                violet </sup></span></tt>,colormenu getcolorcode '#EE82EE',,,#purple
+<tt><span bgcolor='#DA70D6' fgcolor='#111111'><sub> </sub>#DA70D6<sup>                orchid </sup></span></tt>,colormenu getcolorcode '#DA70D6',,,#purple
+<tt><span bgcolor='#FF00FF' fgcolor='#EEEEEE'><sub> </sub>#FF00FF<sup>               fuchsia </sup></span></tt>,colormenu getcolorcode '#FF00FF',,,#purple
+<tt><span bgcolor='#FF00FF' fgcolor='#EEEEEE'><sub> </sub>#FF00FF<sup>               magenta </sup></span></tt>,colormenu getcolorcode '#FF00FF',,,#purple
+<tt><span bgcolor='#BA55D3' fgcolor='#EEEEEE'><sub> </sub>#BA55D3<sup>          mediumorchid </sup></span></tt>,colormenu getcolorcode '#BA55D3',,,#purple
+<tt><span bgcolor='#9370DB' fgcolor='#EEEEEE'><sub> </sub>#9370DB<sup>          mediumpurple </sup></span></tt>,colormenu getcolorcode '#9370DB',,,#purple
+<tt><span bgcolor='#8A2BE2' fgcolor='#EEEEEE'><sub> </sub>#8A2BE2<sup>            blueviolet </sup></span></tt>,colormenu getcolorcode '#8A2BE2',,,#purple
+<tt><span bgcolor='#9400D3' fgcolor='#EEEEEE'><sub> </sub>#9400D3<sup>            darkviolet </sup></span></tt>,colormenu getcolorcode '#9400D3',,,#purple
+<tt><span bgcolor='#9932CC' fgcolor='#EEEEEE'><sub> </sub>#9932CC<sup>            darkorchid </sup></span></tt>,colormenu getcolorcode '#9932CC',,,#purple
+<tt><span bgcolor='#8B008B' fgcolor='#EEEEEE'><sub> </sub>#8B008B<sup>           darkmagenta </sup></span></tt>,colormenu getcolorcode '#8B008B',,,#purple
+<tt><span bgcolor='#800080' fgcolor='#EEEEEE'><sub> </sub>#800080<sup>                purple </sup></span></tt>,colormenu getcolorcode '#800080',,,#purple
+<tt><span bgcolor='#4B0082' fgcolor='#EEEEEE'><sub> </sub>#4B0082<sup>                indigo </sup></span></tt>,colormenu getcolorcode '#4B0082',,,#purple
+^tag(gray)
+^sep(Gray colors)
+<tt><span bgcolor='#DCDCDC' fgcolor='#111111'><sub> </sub>#DCDCDC<sup>             gainsboro </sup></span></tt>,colormenu getcolorcode '#DCDCDC',,,#gray
+<tt><span bgcolor='#D3D3D3' fgcolor='#111111'><sub> </sub>#D3D3D3<sup>             lightgray </sup></span></tt>,colormenu getcolorcode '#D3D3D3',,,#gray
+<tt><span bgcolor='#C0C0C0' fgcolor='#111111'><sub> </sub>#C0C0C0<sup>                silver </sup></span></tt>,colormenu getcolorcode '#C0C0C0',,,#gray
+<tt><span bgcolor='#A9A9A9' fgcolor='#111111'><sub> </sub>#A9A9A9<sup>              darkgray </sup></span></tt>,colormenu getcolorcode '#A9A9A9',,,#gray
+<tt><span bgcolor='#808080' fgcolor='#EEEEEE'><sub> </sub>#808080<sup>                  gray </sup></span></tt>,colormenu getcolorcode '#808080',,,#gray
+<tt><span bgcolor='#696969' fgcolor='#EEEEEE'><sub> </sub>#696969<sup>               dimgray </sup></span></tt>,colormenu getcolorcode '#696969',,,#gray
+<tt><span bgcolor='#778899' fgcolor='#EEEEEE'><sub> </sub>#778899<sup>        lightslategray </sup></span></tt>,colormenu getcolorcode '#778899',,,#gray
+<tt><span bgcolor='#708090' fgcolor='#EEEEEE'><sub> </sub>#708090<sup>             slategray </sup></span></tt>,colormenu getcolorcode '#708090',,,#gray
+<tt><span bgcolor='#2F4F4F' fgcolor='#EEEEEE'><sub> </sub>#2F4F4F<sup>         darkslategray </sup></span></tt>,colormenu getcolorcode '#2F4F4F',,,#gray
+<tt><span bgcolor='#000000' fgcolor='#EEEEEE'><sub> </sub>#000000<sup>                 black </sup></span></tt>,colormenu getcolorcode '#000000',,,#gray

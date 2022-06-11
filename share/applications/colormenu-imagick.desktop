@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Image Magick colors
+Name[pl]=Kolory Image Magick
+Comment=Image Magick colors picker
+Keywords=
+StartupNotify=false
+Icon=colormenu
+TryExec=colormenu imagick
+Exec=colormenu imagick
+Categories=Graphics;
+#NoDisplay=true

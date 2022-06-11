@@ -1,0 +1,626 @@
+#!/usr/bin/env bash
+# Copyright (C) Daniel Napora 2021-22 <napcok@gmail.com>
+# Dependencies: jgmenu, xdotool, xcolor, gcolor3, gpick, pastel, xdg-utils, xclip, notify-send
+# TODO export to .gpl (GIMP,Inkscape)
+
+VERSION="0.9.9"
+TEMP_DIR=/tmp/colormenu
+ME=${0##*/}
+
+DATA_DIR="/usr/share/$ME"
+CNF_DIR="$HOME/.config/colormenu"
+CNF_FILE="$CNF_DIR/colormenu.cfg"
+RECENT="$CNF_DIR/recent.clr"
+USED="$CNF_DIR/.used"
+LASTPAL="$CNF_DIR/.palette"
+[ ! -d "$CNF_DIR" ] && mkdir -p "$CNF_DIR" 
+if [ ! -f $CNF_FILE ]; then
+cat <<EOF > ${CNF_FILE}
+# Paste mode: hex,rgb or rgba
+format=hex
+#Action when color is clicked: paste (imadietely) or copy (to clipboard)
+action=copy
+#What thing to expose on top of main menu: recently picked colors, last used colors or last used palette
+expose=picked
+#Show HTML colors? yes|no
+htmlcolors=yes
+#Color picker (gpick or xcolor)
+picker=gpick
+#Show built in palettes? (slow)
+builtin_palettes=yes
+# Random wallpaper dir
+walldir=/usr/share/backgrounds
+#Position on screen: topleft, top, topright, left, center, right, bottomleft, bottom, bottomright
+position=left
+EOF
+fi
+source <(grep = $CNF_FILE)
+
+RANDWALLDIR=${walldir:-/usr/share/backgrounds}
+
+if [ ! -f $RECENT ]; then
+cat <<EOF > ${RECENT}
+#FFFFFF White
+#C0C0C0 Silver
+#808080 Gray
+#000000 Black
+EOF
+fi
+
+fgcolor() {
+    r=$(printf "%d" 0x${1:1:2}) g=$(printf "%d" 0x${1:3:2}) b=$(printf "%d" 0x${1:5:2})
+    [ "$((r*299+g*587+b*114))" -gt 149000 ] && echo "#111111" || echo "#EEEEEE"
+}
+hex2rgb() {
+    r=$(printf "%d" 0x${1:1:2}) g=$(printf "%d" 0x${1:3:2}) b=$(printf "%d" 0x${1:5:2})
+    echo "rgb($r, $g, $b)"
+}
+hex2rgba() {
+    r=$(printf "%d" 0x${1:1:2}) g=$(printf "%d" 0x${1:3:2}) b=$(printf "%d" 0x${1:5:2})
+    echo "rgba($r, $g, $b, 1.0)"
+}
+pickcolor() {
+    size=${xcolor_preview_size:-255}
+    scale=${xcolor_scale:-8}
+    picker=${picker:-gpick}
+    if [ "$picker" == "gpick" ]; then
+    command="gpick -pso 2>/dev/null"
+    else
+    command="xcolor --preview-size ${size} --scale ${scale}"
+    fi
+    color="$(${command})"
+    if [ -n "${color}" ]; then
+    echo "$color " > "$RECENT".tmp
+    # add on top deduplicate
+    awk '!x[$0]++' "$RECENT" >> "$RECENT".tmp
+    awk '!x[$0]++' "$RECENT".tmp > "$RECENT"
+    [ -n "$1" ] && file="$1"
+    echo "$color " >> "$file"
+    setvar expose=picked
+    fi
+    $ME
+}
+
+addcolor() {
+    color=$(gcolor3)
+    if [ -n "${color}" ]; then
+    echo "$color " > "$RECENT".tmp
+    # add on top deduplicate
+    awk '!x[$0]++' "$RECENT" >> "$RECENT".tmp
+    awk '!x[$0]++' "$RECENT".tmp > "$RECENT"
+    [ -n "$1" ] && file="$1"
+    echo "$color " >> "$file"
+    setvar expose=picked
+    fi
+    $ME
+}
+getcolorcode() {
+    if [ $action = "paste" ];then
+        case "$format" in
+        rgb) clr=$(hex2rgb $1);xdotool type --delay 0 "$clr";;
+        rgba) clr=$(hex2rgba $1);xdotool type --delay 0 "$clr";;
+        *) xdotool type --delay 0 "$1";;
+        esac
+    else  # copy to clipboard
+        case "$format" in
+        rgb) clr=$(hex2rgb $1);echo $clr | tr -d "\n" | xclip -sel c;;
+        rgba) clr=$(hex2rgba $1);echo $clr | tr -d "\n" | xclip -sel c;;
+        *) clr="$1";echo "$1" | tr -d "\n" | xclip -sel c;;
+        esac
+        mkdir -p $TEMP_DIR
+        FNAME="$TEMP_DIR/${1:1:6}.png"
+        convert -size 100x100 xc:"$1" "$FNAME"
+        notify-send ColorMenu "$clr copied to clipboard" --icon="$FNAME" --expire-time=120000
+    fi
+    echo "$1" > "$USED".tmp
+    # add on top and deduplicate
+    awk '!x[$0]++' "$USED" >> "$USED".tmp
+    awk '!x[$0]++' "$USED".tmp > "$USED"
+    
+    [[ $2 ]] && echo "$2" > "$LASTPAL"
+}
+recent2palette () {
+    DATE=$(date +"%Y%m%d-%H%M%S")
+    mkdir -p "$CNF_DIR/palettes/my"
+    grep ^# $RECENT |tac > "$CNF_DIR/palettes/my/My_palette_$DATE.clr"
+    grep ^# $RECENT |pastel sort-by brightness|pastel format hex > "$CNF_DIR/palettes/my/My_palette_$DATE.clr"
+}
+newpalette() {
+    DATE=$(date +"%Y%m%d-%H%M%S")
+    mkdir -p "$CNF_DIR/palettes/my"
+    touch "$CNF_DIR/palettes/my/My_palette_$DATE.clr"
+}
+palettes() {
+    [ -n "$1" ] && pdir="$CNF_DIR/palettes/my/" || pdir="$DATA_DIR/palettes/"
+    if [[ -n "$1" ]]; then
+    out2+=("^tag(mypalettes)")
+    out2+=("^sep($MYPALETTES)")
+    else
+    out2+=("^tag(builtpalettes)")
+    out2+=("^sep($BUILTIN_PAL)")
+    fi
+    for file in "$pdir"*.clr ;do
+    filename=${file##*/}
+    palette=${filename%.*}
+    pal=${palette//_/ }
+    tagname=${palette// /_}
+    out2+=("${pal^},^checkout($tagname)")
+    out3+=("^tag($tagname)")
+    out3+=("^sep(${pal^})")
+    out3+=("$EXPOSE_IN_ROOTMENU,$ME setvar expose=$filename;$ME")
+    out3+=("^sep()")
+    while read -r color name;
+    do
+    out3+=("<tt><small>$color</small> <span bgcolor='$color'><sub> </sub>                 <sup> </sup></span></tt>,$ME getcolorcode '$color' '$file',,,#${palette}")
+    done < "$file"
+    if [[ -n "$1" ]] ; then
+    out3+=("^sep()")
+    out3+=("<b>Add color...</b> from screen,$ME pickcolor '$file'")
+        if hash gcolor3 2>/dev/null; then
+            out3+=("^sep()")
+            out3+=("<b>Add</b> color from selector...,$ME addcolor '$file'")
+        fi
+    out3+=("^sep()")
+    out3+=("<b>Edit</b> palette file,xdg-open '$file'")
+    out3+=("^sep(Danger zone...)")
+    out3+=("<b>Delete</b> palette: ${palette^},^checkout($tagname-del)")
+    out4+=("^tag($tagname-del)")
+    out4+=("^sep(Are you sure?)")
+    out4+=("Yes,rm '$file';$ME") 
+    fi
+    done
+    #if [[ $# = 0 ]] ; then
+    if [[ -n "$1" ]] ; then
+    out2+=("^sep()")
+    out2+=("<b>Add new</b> palette...,$ME newpalette;$ME")
+    out2+=("Open palette directory,xdg-open $CNF_DIR/palettes/my/")
+    fi
+}
+
+position() {
+    case "$position" in
+        ipc) POSITION_MODE="ipc";;
+        pointer) POSITION_MODE="pointer";;
+        topleft) POSITION_MODE="fixed" MENU_VALIGN="top" MENU_HALIGN="left";;
+        top) POSITIOM_MODE="fixed" MENU_VALIGN="top" MENU_HALIGN="center";;
+        topright) POSITION_MODE="fixed" MENU_VALIGN="top" MENU_HALIGN="right";;
+        left) POSITION_MODE="fixed" MENU_VALIGN="center" MENU_HALIGN="left";;
+        right) POSITION_MODE="fixed" MENU_VALIGN="center" MENU_HALIGN="right";;
+        bottomleft) POSITION_MODE="fixed" MENU_VALIGN="bottom" MENU_HALIGN="left";;
+        bottom) POSITION_MODE="fixed" MENU_VALIGN="bottom" MENU_HALIGN="center";;
+        bottomright) POSITION_MODE="fixed" MENU_VALIGN="bottom" MENU_HALIGN="right";;
+        center|*) POSITION_MODE="center" MENU_VALIGN="center" MENU_HALIGN="center";;
+    esac
+}
+
+main () {
+if [[ -f /usr/share/mb-jgtools/pipemenu-standalone.cfg ]];then
+. /usr/share/mb-jgtools/pipemenu-standalone.cfg
+. $HOME/.config/mabox/mabox.conf
+fi 
+case $LANG in
+    pl*)
+    COLORMENU="Menu kolorów"
+    COPY_COLOR_CODE="Kopiuj kod koloru"
+    COLLECT_COLORS="Dodaj kolory"
+    PICK_FROM_SCREEN="<b>Pobierz</b> kolor z ekranu..."
+    ADD_FROM_SELECTOR="<b>Dodaj</b> kolor..."
+    LASTUSED_PAL="Ostatnio używana paleta"
+    RECENTLYUSED="Ostatnio użyte kolory"
+    RECENTLYPICKED="Ostatnio dodane kolory"
+    CLEAR_ALL="Usuń wszystkie"
+    CLEAR_ALL2="<b>Usuń</b> wszystkie"
+    CLEAR_RECUSED="<b>Usuń</b> ostatnio użyte kolory"
+    NEWPAL_FROMREC="<b>Nowa paleta</b> z ostatnio dodanych"
+    CLEAR_RECPICKED="<b>Usuń</b> ostatnio dodane"
+    REMOVEONE="Usuń tylko jeden kolor..."
+    WALLCOLORS="Kolory z tapety"
+    RANDWALL="Ustaw <b>losową tapetę</b>"
+    IMAGICKCOLORS="Kolory <b>Image Magick</b>"
+    HTMLCOLORS="Kolory <b>HTML</b>"
+    PALETTE="Paleta:"
+    COLORPALETTES="Palety kolorów"
+    MYPALETTES="Moje palety"
+    BUILTIN_PAL="Wbudowane palety"
+    EXPOSE_IN_ROOTMENU="Pokaż w menu głównym"
+    SETTINGS="Ustawienia"
+    PREFERENCES="Konfiguruj..."
+    HELP="Pomoc"
+    ;;
+    *)
+    COLORMENU="ColorMenu"
+    COPY_COLOR_CODE="Copy Color Code"
+    COLLECT_COLORS="Collect Colors"
+    PICK_FROM_SCREEN="<b>Pick</b> color from screen..."
+    ADD_FROM_SELECTOR="<b>Add</b> color from selector..."
+    LASTUSED_PAL="Last used palette"
+    RECENTLYUSED="Recently used colors"
+    RECENTLYPICKED="Recently picked colors"
+    CLEAR_ALL="Clear All"
+    CLEAR_ALL2="<b>Clear</b> all"
+    CLEAR_RECUSED="<b>Clear</b> recently used colors"
+    NEWPAL_FROMREC="<b>New palette</b> from recently picked"
+    CLEAR_RECPICKED="<b>Clear</b> recently picked"
+    REMOVEONE="Just remove one color..."
+    WALLCOLORS="Wallpaper colors"
+    RANDWALL="Set <b>random wallpaper</b>"
+    IMAGICKCOLORS="<b>Image Magick</b> Colors"
+    HTMLCOLORS="<b>HTML</b> colors"
+    PALETTE="Palette:"
+    COLORPALETTES="Color palettes"
+    MYPALETTES="My palettes"
+    BUILTIN_PAL="Built-in palettes"
+    EXPOSE_IN_ROOTMENU="Expose in rootmenu"
+    SETTINGS="Settings"
+    PREFERENCES="Preferences"
+    HELP="About and Help"
+    ;;
+esac
+[ "$1" = "ipc" ] && position="ipc"
+
+MENU_PADDING_TOP=${jgtools_padding:-0}
+JGWIDTH="220"
+ITEM_HALIGN="center"
+jgmenu_icon_size=0
+menu_margin_x=${submenu_spacing:-0}
+[ $(pidof picom) ] && MENU_RADIUS=$jgtools_radius
+#jgmenu_font="Noto Sans Medium 10"
+
+position
+mkconfigfile
+
+trap "rm -f ${CONFIG_FILE} ${MENU_ITEMS}" EXIT
+out+=("^sep($COLORMENU)")
+out+=("^sep()")
+out+=("^sep($COLLECT_COLORS...)")
+out+=("$PICK_FROM_SCREEN,$ME pickcolor")
+if hash gcolor3 2>/dev/null; then
+out+=("^sep()")
+out+=("$ADD_FROM_SELECTOR,$ME addcolor")
+fi
+
+
+out+=("^sep($COPY_COLOR_CODE...<sup> [$action $format]</sup>)")
+# exposed thing
+case "$expose" in
+    palette)
+        pal=$(cat "$CNF_DIR/.palette")
+        filename=${pal##*/}
+        palette=${filename%.*}
+        out+=("^sep(<i><span font_weight='light'>$LASTUSED_PAL</span> ${palette^}</i>)")
+        while read -r color name;do
+            out+=("<tt><small>$color</small> <span bgcolor='$color'><sub> </sub>                  <sup> </sup></span></tt> ,$ME getcolorcode '$color'")
+        done < "${pal}"
+        ;;
+    used)
+        mapfile -t < $USED
+        if (( ${#MAPFILE[@]} > 1 )); then
+        out+=("^sep(<i><small>$RECENTLYUSED</small></i>)")
+        while read -r color name;do
+            out+=("<tt><small>$color</small> <span bgcolor='$color'><sub> </sub>                  <sup> </sup></span></tt> ,$ME getcolorcode '$color'")
+        done < <(grep ^# $USED)
+        out+=("^sep()")
+        out+=("$CLEAR_RECUSED,echo > $USED;$ME")
+        fi
+    ;;
+    picked)
+        mapfile -t < $RECENT
+        if (( ${#MAPFILE[@]} > 1 )); then
+        out+=("^sep(<i><small>$RECENTLYPICKED</small></i>)")
+        # for clear/delete 
+        out2+=("^tag(pickeddel)")
+        out2+=("^sep($CLEAR_ALL)")
+        out2+=("$CLEAR_ALL2,echo > $RECENT;$ME")
+        out2+=("^sep($REMOVEONE)")
+        while read -r color name;do
+        
+            out+=("<tt><small>$color</small> <span bgcolor='$color'><sub> </sub>                  <sup> </sup></span></tt> ,$ME getcolorcode '$color'")
+            out2+=("<tt><small>$color</small> <span bgcolor='$color'><sub> </sub>                  <sup> </sup></span></tt> ,sed -i '/${color:1:6}/d' $RECENT;$ME")
+        done < <(grep ^# $RECENT)
+              
+        out+=("^sep()")
+        out+=("$NEWPAL_FROMREC,$ME recent2palette;$ME")
+        out+=("$CLEAR_RECPICKED,^checkout(pickeddel)")
+        fi
+        ;;
+    wallpaper)
+        WALLPALDIR="$HOME/.config/colormenu/palettes/wallp"
+        mkdir -p "$WALLPALDIR"
+        read WALLPATH<<< $(grep file "$HOME/.config/nitrogen/bg-saved.cfg" | cut -d'=' -f2)
+        WALLPAPER=${WALLPATH##*/}
+        if [ ! -f "$WALLPALDIR/$WALLPAPER.clr" ]; then
+        convert ${WALLPATH} -resize 25% -colors 16 -unique-colors txt:- |grep -v '^#'| awk '{print substr($3,1,7)}' |pastel sort-by brightness |pastel format hex > "$WALLPALDIR/$WALLPAPER.clr"
+        fi
+        #mapfile -t wallcolors < "$WALLPALDIR/$WALLPAPER.clr"
+        out+=("^sep(<i><small>$WALLCOLORS</small></i>)")
+        while read -r color name;do
+            out+=("<tt><small>$color</small> <span bgcolor='$color'><sub> </sub>                  <sup> </sup></span></tt> ,$ME getcolorcode '$color'")
+        done < "$WALLPALDIR/$WALLPAPER.clr"
+        out+=("^sep()")
+        out+=("$RANDWALL,nitrogen --random ${RANDWALLDIR} --set-scaled --save;$ME")
+        ;;
+    *)
+        if [ -f "$DATA_DIR/palettes/$expose" ];then
+        palfile="$DATA_DIR/palettes/$expose"
+        elif [ -f "$CNF_DIR/palettes/my/$expose" ];then
+        palfile="$CNF_DIR/palettes/my/$expose"
+        fi
+        if [ $palfile ];then
+        palette=${expose%.*}
+        pal=${palette//_/ }
+        out+=("^sep(<i><small>$PALETTE ${pal^}</small></i>)")
+        while read -r color name;
+        do
+        out+=("<tt><small>$color</small> <span bgcolor='$color'><sub> </sub>                 <sup> </sup></span></tt>,$ME getcolorcode '$color' '$file';$ME setvar expose=palette,,,#${palette}")
+        done < "$palfile"
+        fi
+        ;;
+
+esac
+#if [[ "$CNF_DIR"/palettes/my/*.clr ]]; then
+out+=("^sep($COLORPALETTES)")
+if [ "$(find "$CNF_DIR"/palettes/my/*.clr -maxdepth 1 -type f -iname \*.clr 2>/dev/null)" ]; then
+out+=("$MYPALETTES,^checkout(mypalettes)")
+palettes my
+fi
+if [[ $builtin_palettes == "yes" ]];then
+out+=("$BUILTIN_PAL,^checkout(builtpalettes)")
+palettes
+fi
+# WALLPAPER COLORS
+if [ "$expose" != "wallpaper" ];then
+out+=("$WALLCOLORS,^checkout(wallcolors)")
+read WALLPAPER<<< $(grep file "$HOME/.config/nitrogen/bg-saved.cfg | cut -d'=' -f2")
+WALLPALDIR="$HOME/.config/colormenu/palettes/wallp"
+mkdir -p "$WALLPALDIR"
+read WALLPATH<<< $(grep file "$HOME/.config/nitrogen/bg-saved.cfg" | cut -d'=' -f2)
+WALLPAPER=${WALLPATH##*/}
+if [ ! -f "$WALLPALDIR/$WALLPAPER.clr" ]; then
+   convert ${WALLPATH} -resize 25% -colors 16 -unique-colors txt:- |grep -v '^#'| awk '{print substr($3,1,7)}' |pastel sort-by brightness |pastel format hex > "$WALLPALDIR/$WALLPAPER.clr"
+fi
+        #mapfile -t wallcolors < "$WALLPALDIR/$WALLPAPER.clr"
+out2+=("^tag(wallcolors)")
+out2+=("^sep($WALLCOLORS)")
+out2+=("$EXPOSE_IN_ROOTMENU ,$ME setvar expose=wallpaper;$ME")
+out2+=("^sep()")
+while read -r color name;do
+        out2+=("<tt><small>$color</small> <span bgcolor='$color'><sub> </sub>                  <sup> </sup></span></tt> ,$ME getcolorcode '$color'")
+done < "$WALLPALDIR/$WALLPAPER.clr"
+out2+=("^sep()")
+out2+=("$RANDWALL,nitrogen --random ${RANDWALLDIR} --set-scaled --save;$ME setvar expose=wallpaper;$ME")
+fi
+
+out1+=("$IMAGICKCOLORS,colormenu imagick")
+
+
+
+out1+=("^sep($SETTINGS)")
+out1+=("$PREFERENCES,^pipe($ME preferences)")
+
+out1+=("^sep()")
+LNG=${LANG:0:2}
+if [[ -f "/usr/share/colormenu/help/$LNG.html" ]];then
+out1+=("$HELP,yhtml /usr/share/colormenu/help/$LNG.html 'Mabox Help - ColorMenu'")
+else
+out1+=("$HELP,yhtml /usr/share/colormenu/help/en.html 'Mabox Help - ColorMenu'")
+fi
+
+
+if [ $htmlcolors = "yes" ]; then
+htmlroot="^sep()
+${HTMLCOLORS},^checkout(html)
+"
+htmlsub="^tag(html)
+. ${DATA_DIR}/htmlsub.csv"
+htmlclrs=". ${DATA_DIR}/htmlclrs.csv"
+else
+htmlroot="" htmlsub="" htmlclrs=""
+fi
+
+
+cat << EOF > ${MENU_ITEMS}
+$(printf '%s\n' "${out[@]}")
+${htmlroot}
+
+$(printf '%s\n' "${out1[@]}")
+${htmlsub}
+$(printf '%s\n' "${out2[@]}")
+
+${htmlclrs}
+$(printf '%s\n' "${out3[@]}")
+$(printf '%s\n' "${out4[@]}")
+EOF
+jgmenu --config-file=${CONFIG_FILE} --csv-file=${MENU_ITEMS} 2>/dev/null
+#printf '%s\n' "${out3[@]}"
+exit 0
+}
+
+imagick() {
+ if [[ -f /usr/share/mb-jgtools/pipemenu-standalone.cfg ]];then
+. /usr/share/mb-jgtools/pipemenu-standalone.cfg
+. $HOME/.config/mabox/mabox.conf
+fi 
+case $LANG in
+    pl*) TYPE_TO_SEARCH="pisz aby wyszukać"
+    IMAGICKCOLORS="Kolory Image Magick"
+    BACK="Wróć do Menu Kolorów"
+    ;;
+    *) TYPE_TO_SEARCH="type to search"
+    IMAGICKCOLORS="Image Magick Colors"
+    BACK="Back to ColorMenu"
+    ;;
+esac
+#MENU_PADDING_TOP=${jgtools_padding:-24}
+MENU_PADDING_TOP=$((jgtools_padding+24))
+JGWIDTH="300"
+ITEM_HALIGN="center"
+jgmenu_icon_size=0
+menu_margin_x=${submenu_spacing:-0}
+[ $(pidof picom) ] && MENU_RADIUS=$jgtools_radius
+jgmenu_font="Noto Sans Medium 12"
+MENU_HALIGN="center"
+MENU_VALIGN="center"
+TABS="280"
+icons=0
+iconmargin=0
+item_height_factor=240
+MENU_HEIGHT_MAX=480
+mkconfigfile
+
+trap "rm -f ${CONFIG_FILE} ${MENU_ITEMS}" EXIT  
+
+out+=("^sep($IMAGICKCOLORS)")
+out+=("$BACK,colormenu")
+out+=("^sep()")
+
+while read -r color name;do
+        out+=("<tt><small>$color</small> <span bgcolor='$color'><sub> </sub>                  <sup> </sup></span> $name</tt> ,$ME getcolorcode '$color'")
+done < "$DATA_DIR/imagick.txt"
+
+ cat << EOF > ${MENU_ITEMS}
+@search,,$((jgtools_padding + 32)),$((jgtools_padding + 4)),292,20,4,left,top,auto,#262626,"""<big></big> <i>$TYPE_TO_SEARCH</i>"""
+$(printf '%s\n' "${out[@]}")
+
+EOF
+jgmenu --config-file=${CONFIG_FILE} --csv-file=${MENU_ITEMS} 2>/dev/null
+}
+preferences() {
+case $LANG in
+    pl*)
+    SETTINGS="Ustawienia"
+    CLICK_ACTION="Akcja po kliknięciu w kolor:"
+    EXPOSE="Pokaż w menu głównym:"
+    HTMLCOLORS="Kolory HTML:"
+    HTML="Pokaż kolory HTML?"
+    BUILTIN="Wbudowane palety:"
+    BUILT="Pokaż wbudowane palety?"
+    PICKER="Pobieranie kolorów z ekranu:"
+    POSITION="Pozycja:"
+    RESET="Zresetuj ustawienia"
+    EDIT_CONF="Edytuj plik konfiguracyjny"
+    OPEN_DIR="Otwórz katalog z konfiguracją"
+    OUTFORMAT="Format wyjściowy"
+    PASTE="<b>paste</b>   (wklej natychmiast)"
+    COPY="<b>copy</b>    (kopiuj do schowka)"
+    SHOW_IN_ROOT="Pokazuj w menu głównym"
+    PICKED="<b>picked</b> ostatnio dodane kolory"
+    USED="<b>used</b> ostatnio użyte kolory"
+    PALETTE="<b>palette</b> ostatnio użyta paleta"
+    WALLPAPER="<b>wallpaper</b> kolory z tapety"
+    COLORPICKER="Pobieracz kolorów"
+    POS="Pozycja na ekranie"
+    ;;
+    *)
+    SETTINGS="Settings"
+    CLICK_ACTION="Color click action:"
+    EXPOSE="Expose in rootmenu:"
+    HTMLCOLORS="HTML colors:"
+    HTML="Show HTML colors?"
+    BUILTIN="Built-in palettes:"
+    BUILT="Show Built-in palettes?"
+    PICKER="Color picker:"
+    POSITION="Position:"
+    RESET="Reset to defaults"
+    EDIT_CONF="Edit config file"
+    OPEN_DIR="Open config directory"
+    OUTFORMAT="Output format"
+    PASTE="<b>paste</b>   (paste color immediately)"
+    COPY="<b>copy</b>    (copy color to clipboard)"
+    SHOW_IN_ROOT="Show on top of rootmenu"
+    PICKED="<b>picked</b> recently picked colors"
+    USED="<b>used</b> recently used colors"
+    PALETTE="<b>palette</b> recently used palette"
+    WALLPAPER="<b>wallpaper</b> colors"
+    COLORPICKER="Color Picker"
+    POS="Position on screen"
+    ;;
+esac
+
+out2+=("^sep($SETTINGS)")
+out2+=("<tt>$(printf "%-20s %20s" "$CLICK_ACTION" "[<b>$action</b>]")</tt>,^checkout(action)")
+out2+=("<tt>$(printf "%-20s %20s" "Format:" "[<b>$format</b>]")</tt>,^checkout(format)")
+out2+=("^sep()")
+out2+=("<tt>$(printf "%-20s %20s" "$EXPOSE" "[<b>$expose</b>]")</tt>,^checkout(expose)")
+out2+=("<tt>$(printf "%-20s %20s" "$HTMLCOLORS:" "[<b>$htmlcolors</b>]")</tt>,^checkout(showhtml)")
+out2+=("<tt>$(printf "%-20s %20s" "$BUILTIN" "[<b>$builtin_palettes</b>]")</tt>,^checkout(builtinpalettes)")
+out2+=("<tt>$(printf "%-20s %20s" "$PICKER" "[<b>$picker</b>]")</tt>,^checkout(picker)")
+out2+=("^sep()")
+out2+=("<tt>$(printf "%-20s %20s" "$POSITION" "[<b>$position</b>]")</tt>,^checkout(position)")
+out2+=("^sep()")
+out2+=("$RESET,rm $CNF_FILE;$ME")
+out2+=("^sep()")
+out2+=("$EDIT_CONF,xdg-open $CNF_FILE")
+out2+=("$OPEN_DIR,xdg-open $CNF_DIR")
+
+out2+=("^tag(format)")
+out2+=("^sep($OUTFORMAT)")
+out2+=("<b>hex</b>        <i>#579C8E</i>,$ME setvar format=hex;$ME")
+out2+=("<b>rgb</b>        <i>rgb(87&#44; 156&#44; 142)</i>,$ME setvar format=rgb;$ME")
+out2+=("<b>rgba</b>      <i>rgba(87&#44; 156&#44; 142&#44; 1.0)</i>,$ME setvar format=rgba;$ME")
+
+out2+=("^tag(action)")
+out2+=("^sep($CLICK_ACTION)")
+out2+=("$PASTE,$ME setvar action=paste;$ME")
+out2+=("$COPY,$ME setvar action=copy;$ME")
+
+out2+=("^tag(expose)")
+out2+=("^sep($SHOW_IN_ROOT)")
+out2+=("$PICKED,$ME setvar expose=picked;$ME")
+out2+=("$USED,$ME setvar expose=used;$ME")
+out2+=("$PALETTE,$ME setvar expose=palette;$ME")
+out2+=("$WALLPAPER,$ME setvar expose=wallpaper;$ME")
+
+out2+=("^tag(showhtml)")
+out2+=("^sep($HTML)")
+out2+=("yes,$ME setvar htmlcolors=yes;$ME")
+out2+=("no,$ME setvar htmlcolors=no;$ME")
+
+out2+=("^tag(builtinpalettes)")
+out2+=("^sep($BUILT)")
+out2+=("yes,$ME setvar builtin_palettes=yes;$ME")
+out2+=("no,$ME setvar builtin_palettes=no;$ME")
+
+out2+=("^tag(picker)")
+out2+=("^sep($COLORPICKER)")
+out2+=("gpick,$ME setvar picker=gpick;$ME")
+out2+=("xcolor,$ME setvar picker=xcolor;$ME")
+
+
+out2+=("^tag(position)")
+out2+=("^sep($POS)")
+out2+=("center,$ME setvar position=center;$ME")
+out2+=("topleft,$ME setvar position=topleft;$ME")
+out2+=("top,$ME setvar position=top;$ME")
+out2+=("topright,$ME setvar position=topright;$ME")
+out2+=("left,$ME setvar position=left;$ME")
+out2+=("right,$ME setvar position=right;$ME")
+out2+=("bottomleft,$ME setvar position=bottomleft;$ME")
+out2+=("bottom,$ME setvar position=bottom;$ME")
+out2+=("bottomright,$ME setvar position=bottomright;$ME")
+printf '%s\n' "${out2[@]}"
+}
+setvar() {
+    search=$(echo $1|cut -d= -f1)
+    FILE=${CNF_FILE}
+    if grep -Rq $search $FILE
+    then #found
+        sed -i s/^"$search".*$/"$1"/ $FILE
+    else #not found
+    echo $1 >> $FILE
+fi
+}
+
+case "$1" in
+    -h|--help|help) usage;;
+    --pickcolor|pickcolor) pickcolor "$2";;
+    --addcolor|addcolor) addcolor "$2" ;;
+    -g|--getcolorcode|getcolorcode) getcolorcode "$2" "$3";;
+    -p|preferences) preferences;;
+    -s|setvar) setvar "$2";;
+    ipc) main "$1";;
+    recent2palette) recent2palette ;;
+    newpalette) newpalette;;
+    imagick) imagick;;
+     *) main;;
+esac
+exit 0

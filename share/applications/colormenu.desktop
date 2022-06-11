@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=ColorMenu
+Name[pl]=Menu Kolorów
+Comment=Pick, paste and manage colors
+Keywords=
+StartupNotify=false
+Icon=colormenu
+TryExec=colormenu
+Exec=colormenu
+Categories=Graphics;
+#NoDisplay=true
