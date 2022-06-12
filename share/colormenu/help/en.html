@@ -19,6 +19,10 @@ div.fixeddown {
     bottom:0;
     right:0;
 }
+ol {
+  margin: 0;
+  padding: 0;
+}
 </style>
 <body>
 
@@ -39,6 +43,7 @@ div.fixeddown {
   <section id="ColorMenu" class="w3-container tab" style="min-height:100vh;">
   
   <div class="w3-container">
+  <img src="./img/colormenu3.png" align="right">
   <h2>Color Menu</h2>
   <p>an unusual tool that can help you work with colors</p>
   <i>development version</i>
@@ -47,6 +52,13 @@ div.fixeddown {
   <li>autogenarate  color palette from current wallpaper</li></ul>
   </p>
   <a class="w3-button w3-round w3-tiny w3-lime w3-margin" href="run://colormenu">Launch Color Menu</a>
+  <ol>
+  <li><strong>Collecting colors</strong> - add color from screen or selector</li>
+  <li>Configured click on color <strong>Action</strong> may be <strong>copy</strong> (to clipboard) or <strong>paste</strong> (imadietely in cursor position)</li>
+  <li><strong>Exposed palette</strong> - may be wallpaper colors, built-in palette, your own palette or list of recently picked colors.</li>
+  <li>More palettes, HTML colors, ImageMagick colors</li>
+  <li>Settings and Help</li>
+  </ol>
   </div>
   <div class="fixeddown">
       <div class="w3-bar w3-tiny">
@@ -63,12 +75,16 @@ div.fixeddown {
   <section id="Collect" class="w3-container tab" style="display:none;min-height:100vh;">
    <div class="fixed"><a class="w3-button w3-round w3-tiny w3-lime w3-margin" href="run://colormenu">Launch Color Menu</a></div>
     <h2>Collecting colors</h2>
-    <p></p>
+    <img src="./img/picked_colors.png" align="right">
+    <p>You can pick color from screen and add color from GTK selector.</p>
+    <p>While picking colors recently picked colors are presented in menu so you can copy their codes and save them as own color palette.</p>
   </section>
   <section id="Copy" class="w3-container tab" style="display:none;min-height:100vh">
     <div class="fixed"><a class="w3-button w3-round w3-tiny w3-lime w3-margin" href="run://colormenu">Launch Color Menu</a></div>
     <h2>Copy or paste color codes</h2>
   <p>By clicking on color in Color Menu you can <strong>copy</strong> or <strong>paste</strong> color code in needed format - depending how Colormenu is configured.</p>
+  <p>Currently configured action is presented in menu.</p>
+  <em>You can click on yellow buttons in tables below to set up needed: action and format</em>
   <h4>Actions</h4>
   <table class="w3-table w3-bordered w3-dark-grey w3-small">
 <tr class="w3-teal">
@@ -84,8 +100,6 @@ div.fixeddown {
       <td>paste color code immadietely in cursor position</td>
     </tr>
     </table>
-
-  
   <h4>Formats</h4>
     <table class="w3-table w3-bordered w3-dark-grey w3-small">
 <tr class="w3-teal">
@@ -102,7 +116,7 @@ div.fixeddown {
     </tr>
       <tr>
       <td><a class="w3-btn w3-yellow w3-tiny" href="run://colormenu setvar format=rgba">rgba</a></td>
-      <td>rgba<em>rgba(78, 140, 214, 1.0)</em></td>
+      <td>rgba <em>rgba(78, 140, 214, 1.0)</em></td>
     </tr>
     </table>
 
@@ -110,6 +124,7 @@ div.fixeddown {
   <section id="Palette" class="w3-container tab" style="display:none;min-height:100vh">
     <div class="fixed"><a class="w3-button w3-round w3-tiny w3-lime w3-margin" href="run://colormenu">Launch Color Menu</a></div>
     <h2>Palette management</h2>
+    <img src="./img/picked_colors.png" align="right">
     <p>Color Menu comes with several built-in color palettes.</p><p> It also generates color palette from currently used wallpaper automatically.</p>
     <p>You can create additional own palettes from colors picked from screen or image.</p>
 
@@ -126,10 +141,13 @@ div.fixeddown {
     <div class="fixed"><a class="w3-button w3-round w3-tiny w3-lime w3-margin w3-display-topright" href="run://colormenu imagick">Launch ImageMagick colors selector</a></div>
     <h2>ImageMagick colors selector</h2>
     <p>ImageMagick colors selector let you pick color codes from a list of named colors recognized by ImageMagick.</p>
+    <p>The list contains more than 600 named colors, you can search colors by name.</p>
+    <img src="./img/imagick_colors.png" align="center">
   </section>
     <section id="Settings" class="w3-container tab" style="display:none;min-height:100vh">
     <h2>Settings</h2>
-    <p> </p>
+        <img src="./img/colormenu_settings.png" align="right">
+    <p>To configure ColorMenu use Settings submenu. </p>
   </section>
 </div>
 
