@@ -3,7 +3,7 @@
 # Dependencies: jgmenu, xdotool, xcolor, gcolor3, gpick, pastel, xdg-utils, xclip, notify-send
 # TODO export to .gpl (GIMP,Inkscape)
 
-VERSION="1.0.0"
+VERSION="1.0.2"
 TEMP_DIR=/tmp/colormenu
 ME=${0##*/}
 
@@ -13,7 +13,7 @@ CNF_FILE="$CNF_DIR/colormenu.cfg"
 RECENT="$CNF_DIR/recent.clr"
 USED="$CNF_DIR/.used"
 LASTPAL="$CNF_DIR/.palette"
-[ ! -d "$CNF_DIR" ] && mkdir -p "$CNF_DIR" 
+[ ! -d "$CNF_DIR" ] && mkdir -p "$CNF_DIR/palettes/my" 
 if [ ! -f $CNF_FILE ]; then
 cat <<EOF > ${CNF_FILE}
 # Paste mode: hex,rgb or rgba
@@ -122,8 +122,8 @@ getcolorcode() {
 recent2palette () {
     DATE=$(date +"%Y%m%d-%H%M%S")
     mkdir -p "$CNF_DIR/palettes/my"
-    grep ^# $RECENT |tac > "$CNF_DIR/palettes/my/My_palette_$DATE.clr"
-    grep ^# $RECENT |pastel sort-by brightness|pastel format hex > "$CNF_DIR/palettes/my/My_palette_$DATE.clr"
+    #grep ^# $RECENT |tac > "$CNF_DIR/palettes/my/My_palette_$DATE.clr"
+    grep ^# $RECENT |awk '{ print $1 }'| pastel sort-by brightness|pastel format hex > "$CNF_DIR/palettes/my/My_palette_$DATE.clr"
 }
 newpalette() {
     DATE=$(date +"%Y%m%d-%H%M%S")
@@ -155,25 +155,25 @@ palettes() {
     done < "$file"
     if [[ -n "$1" ]] ; then
     out3+=("^sep()")
-    out3+=("<b>Add color...</b> from screen,$ME pickcolor '$file'")
+    out3+=("$PICK_FROM_SCREEN,$ME pickcolor '$file'")
         if hash gcolor3 2>/dev/null; then
             out3+=("^sep()")
-            out3+=("<b>Add</b> color from selector...,$ME addcolor '$file'")
+            out3+=("$ADD_FROM_SELECTOR,$ME addcolor '$file'")
         fi
     out3+=("^sep()")
-    out3+=("<b>Edit</b> palette file,xdg-open '$file'")
-    out3+=("^sep(Danger zone...)")
-    out3+=("<b>Delete</b> palette: ${palette^},^checkout($tagname-del)")
+    out3+=("$EDIT_PALFILE,xdg-open '$file'")
+    out3+=("^sep($DANGER_ZONE)")
+    out3+=("$DELETE_PAL ${palette^},^checkout($tagname-del)")
     out4+=("^tag($tagname-del)")
-    out4+=("^sep(Are you sure?)")
-    out4+=("Yes,rm '$file';$ME") 
+    out4+=("^sep($ARE_YOU_SURE)")
+    out4+=("$YES,rm '$file';$ME") 
     fi
     done
     #if [[ $# = 0 ]] ; then
     if [[ -n "$1" ]] ; then
     out2+=("^sep()")
-    out2+=("<b>Add new</b> palette...,$ME newpalette;$ME")
-    out2+=("Open palette directory,xdg-open $CNF_DIR/palettes/my/")
+    out2+=("$ADD_NEW_PAL,$ME newpalette;$ME")
+    out2+=("$OPEN_PALDIR,xdg-open $CNF_DIR/palettes/my/")
     fi
 }
 
@@ -222,6 +222,13 @@ case $LANG in
     PALETTE="Paleta:"
     COLORPALETTES="Palety kolorów"
     MYPALETTES="Moje palety"
+    ADD_NEW_PAL="<b>Dodaj nową</b> paletę..."
+    OPEN_PALDIR="Otwórz katalog z paletami"
+    EDIT_PALFILE="<b>Edytuj</b> plik palety"
+    DANGER_ZONE="Usuwanie..."
+    DELETE_PAL="<b>Usuń</b> paletę:"
+    ARE_YOU_SURE="Jesteś pewien?"
+    YES="Tak"
     BUILTIN_PAL="Wbudowane palety"
     EXPOSE_IN_ROOTMENU="Pokaż w menu głównym"
     SETTINGS="Ustawienia"
@@ -251,6 +258,13 @@ case $LANG in
     PALETTE="Palette:"
     COLORPALETTES="Color palettes"
     MYPALETTES="My palettes"
+    ADD_NEW_PAL="<b>Add new</b> palette..."
+    OPEN_PALDIR="Open palette directory"
+    EDIT_PALFILE="<b>Edit</b> palette file"
+    DANGER_ZONE="Danger zone..."
+    DELETE_PAL="<b>Delete</b> palette:"
+    ARE_YOU_SURE="Are you sure?"
+    YES="Yes"
     BUILTIN_PAL="Built-in palettes"
     EXPOSE_IN_ROOTMENU="Expose in rootmenu"
     SETTINGS="Settings"
