@@ -3,7 +3,7 @@
 # Dependencies: jgmenu, xdotool, xcolor, gcolor3, gpick, pastel, xdg-utils, xclip, notify-send
 # TODO export to .gpl (GIMP,Inkscape)
 
-VERSION="1.0.2"
+VERSION="1.0.3"
 TEMP_DIR=/tmp/colormenu
 ME=${0##*/}
 
@@ -13,7 +13,7 @@ CNF_FILE="$CNF_DIR/colormenu.cfg"
 RECENT="$CNF_DIR/recent.clr"
 USED="$CNF_DIR/.used"
 LASTPAL="$CNF_DIR/.palette"
-[ ! -d "$CNF_DIR" ] && mkdir -p "$CNF_DIR/palettes/my" 
+[ ! -d "$CNF_DIR/palettes/my" ] && mkdir -p "$CNF_DIR/palettes/my" 
 if [ ! -f $CNF_FILE ]; then
 cat <<EOF > ${CNF_FILE}
 # Paste mode: hex,rgb or rgba

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<title>Mabox ColorMenu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./css/w3.css">
+<style>
+body{
+background-color:#222222;
+color: #909090  
+}
+div.fixed {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 200px;
+}
+div.fixeddown {
+    position: fixed;
+    bottom:0;
+    right:0;
+}
+ol {
+  margin: 0;
+  padding: 0;
+}
+</style>
+<body>
+
+<div class="w3-sidebar w3-bar-block w3-dark-grey w3-card" style="width:165px">
+<div class="w3-center w3-margin"><img src="./img/colormenu.png" onclick="openTab(event, 'ColorMenu')"></div>
+  <button class="w3-bar-item w3-button w3-small tablink" onclick="openTab(event, 'ColorMenu')">ColorMenu</button>
+  <button class="w3-bar-item w3-button w3-small tablink" onclick="openTab(event, 'Collect')">Pobieranie Kolorów</button>
+  <button class="w3-bar-item w3-button w3-small tablink" onclick="openTab(event, 'Copy')">Kody Kolorów</button>
+  <button class="w3-bar-item w3-button w3-small tablink" onclick="openTab(event, 'Palette')">Zarządzanie paletami</button>
+  <button class="w3-bar-item w3-button w3-small tablink" onclick="openTab(event, 'Wallpaper')">Kolory z tapety</button>
+  <button class="w3-bar-item w3-button w3-small tablink" onclick="openTab(event, 'Imagick')">Kolory ImageMagick</button>
+  <button class="w3-bar-item w3-button w3-small tablink" onclick="openTab(event, 'Settings')">Ustawienia</button>
+  <a class="w3-button w3-round w3-tiny w3-lime w3-margin" href="run://colormenu">Uruchom ColorMenu</a>
+</div>
+
+<div style="margin-left:165px;" class="w3-small">
+ 
+  <section id="ColorMenu" class="w3-container tab" style="min-height:100vh;">
+  
+  <div class="w3-container">
+  <img src="./img/colormenu3.png" align="right">
+  <h2>Color Menu</h2>
+  <i>nietypowe narzędzie do pracy z kolorami</i>
+
+  <p>Możliwości:<ul><li><strong>pobieranie kolorów</strong> z ekranu oraz <strong>zarządzanie paletami</strong></li>
+  <li><strong>kopiuj</strong> lub <strong>wklejaj</strong> kody kolorów (hex, rgb lub rgba)</li>
+  <li>automatyczne generowanie palety kolorów z obecnie ustawionej tapety</li></ul>
+  </p>
+  <a class="w3-button w3-round w3-tiny w3-lime w3-margin" href="run://colormenu">Uruchom ColorMenu</a>
+  <br />
+  <br />
+  <br />
+  <ol>
+  <li><strong>Dodaj kolory</strong> - dodaj kolory z ekranu lub selektora GTK</li>
+  <li>Konfigurowalna <strong>Akcja</strong>: <strong>copy</strong> (kopiuj do schowka) lub <strong>paste</strong> (natychmiast wklej w pozycji kursora)</li>
+  <li><strong>Paleta w menu głównym</strong> - kolory z tapety (domyślnie), wbudowana paleta, własna paleta lub lista ostatnio dodanych kolorów</li>
+  <li>Więcej palet, kolory HTML, kolory ImageMagick</li>
+  <li>Ustawienia oraz Pomoc</li>
+  </ol>
+  </div>
+  <div class="fixeddown">
+      <div class="w3-bar w3-tiny">
+          <div class="w3-bar-item">Mabox Linux linki:</div>
+  <a href="https://maboxlinux.org" class="w3-bar-item w3-hover-green">www</a>
+  <a href="https://forum.maboxlinux.org" class="w3-bar-item w3-hover-green">forum</a>
+  <a href="https://manual.maboxlinux.org/en" class="w3-bar-item w3-hover-green">manual</a>
+  <a href="https://ko-fi.com/maboxlinux" class="w3-bar-item w3-hover-green">donate</a>
+</div>
+</div>
+  </section>
+
+ 
+  <section id="Collect" class="w3-container tab" style="display:none;min-height:100vh;">
+   <div class="fixed"><a class="w3-button w3-round w3-tiny w3-lime w3-margin" href="run://colormenu">Uruchom ColorMenu</a></div>
+    <h2>Dodawanie kolorów</h2>
+    <img src="./img/picked_colors.png" align="right">
+    <p>Możesz pobrać kolor z ekranu lub dodać z selektora GTK.</p>
+    <p>Lista ostatnio dodanych kolorów jest prezentowana w menu, pozwalając na skopiowanie kodu koloru.</p>
+    <p>Podmenu Wyczyść ostatnio dodane kolory pozwala na usunięcie wszystkich lub pojedyńczych kolorów.</p>
+    <p>Możesz tworzyć własne palety z dodanych kolorów.</p>
+  </section>
+  <section id="Copy" class="w3-container tab" style="display:none;min-height:100vh">
+    <div class="fixed"><a class="w3-button w3-round w3-tiny w3-lime w3-margin" href="run://colormenu">Uruchom ColorMenu</a></div>
+    <h2>Kopiuj lub wklej kod koloru</h2>
+  <p>Klikając w wybrany kolor w ColorMenu możesz <strong>skopiować do schowka</strong> lub <strong>natychmiast wkleić</strong> kod koloru w wybranym formacie - w zależnści od obecnej konfiguracji.</p>
+  <p>Aktualnie skonfigurowana akcja jest pokazana w menu.</p>
+  <em>Możesz kliknąć w przyciski w tabeli poniżej aby ustawić: akcję oraz format</em>
+  <h4>Akcje</h4>
+  <table class="w3-table w3-bordered w3-dark-grey w3-small">
+<tr class="w3-teal">
+      <th>Akcja</th>
+      <th>Opis</th>
+    </tr>
+    <tr>
+      <td><a class="w3-btn w3-yellow w3-tiny" href="run://colormenu setvar action=copy">Copy</a></td>
+      <td>kopiuje kod koloru do schowka</td>
+    </tr>
+    <tr>
+      <td><a class="w3-btn w3-yellow w3-tiny" href="run://colormenu setvar action=paste">Paste</a></td>
+      <td>wkleja natychmiast kod koloru w pozycji kursora</td>
+    </tr>
+    </table>
+  <h4>Formaty</h4>
+    <table class="w3-table w3-bordered w3-dark-grey w3-small">
+<tr class="w3-teal">
+      <th>Format</th>
+      <th>Opis</th>
+    </tr>
+    <tr>
+      <td><a class="w3-btn w3-yellow w3-tiny" href="run://colormenu setvar format=hex">hex</a></td>
+      <td>szesnastkowy <em>#4e8cd6</em></td>
+    </tr>
+    <tr>
+      <td><a class="w3-btn w3-yellow w3-tiny" href="run://colormenu setvar format=rgb">rgb</a></td>
+      <td>rgb <em>rgb(78, 140, 214)</em></td>
+    </tr>
+      <tr>
+      <td><a class="w3-btn w3-yellow w3-tiny" href="run://colormenu setvar format=rgba">rgba</a></td>
+      <td>rgba <em>rgba(78, 140, 214, 1.0)</em></td>
+    </tr>
+    </table>
+
+  </section>
+  <section id="Palette" class="w3-container tab" style="display:none;min-height:100vh">
+    <div class="fixed"><a class="w3-button w3-round w3-tiny w3-lime w3-margin" href="run://colormenu">Uruchom Color Menu</a></div>
+    <h2>Zarządzanie paletami</h2>
+    <img src="./img/picked_colors.png" align="right">
+    <p>ColorMenu distarcza kilka wbudowanych palet.</p><p>Palet kalorów z obecnie ustawionej tapety jest generowana automatycznie.</p>
+    <p>Możesz również tworzyć własne palety z kolorów pobranych z ekranu lub selektora GTK.</p>
+    <p>Utworzone palety posiadają automatycznie wygenerowane nazwy, możesz je zmienić na swoje zmieniając nazwę pliku.</p>
+    <a class="w3-button w3-round w3-lime w3-tiny" href="run://pcmanfm ~/.config/colormenu/palettes/my/">Otwórz katalog z paletami</a>
+<p><strong>Format palety kolorów</strong> jest bardzo prosty. Po prostu szesnastkowy kod koloru w każdej linii.</p>
+<pre>#FFFFFF
+#AAAAAA
+#000000</pre>
+  </section>
+   </section>
+  <section id="Wallpaper" class="w3-container tab" style="display:none;min-height:100vh">
+      <div class="fixed"></div>
+    <h2>Kolory z tapety</h2>
+    <p>Paleta kolorów z aktualnie ustawionej tapety jest generowana automatycznie.</p>
+    <p>W Maboxie możesz ustawić tapetę na wiele sposobów... </p>
+    <a class="w3-button w3-round w3-tiny w3-lime w3-margin" href="run://jgwallpaperchanger -s">Menu zmiany tapety</a>
+  </section>
+ </section>
+  <section id="Imagick" class="w3-container tab" style="display:none;min-height:100vh">
+    <div class="fixed"><a class="w3-button w3-round w3-tiny w3-lime w3-margin w3-display-topright" href="run://colormenu imagick">Uruchom selektor kolorów ImageMagick</a></div>
+    <h2>Kolory ImageMagick</h2>
+    <p>Selektor kolorów ImageMagick pozwala szybko wybrać kolor z listy nazwanych kolorów ImageMagick.</p>
+    <p>Lista zawiera ponad 600 kolorów, możesz je wyszukiwać po nazwie.</p>
+    <img src="./img/imagick_colors.png" align="center">
+  </section>
+    <section id="Settings" class="w3-container tab" style="display:none;min-height:100vh">
+    <h2>Ustawienia</h2>
+        <img src="./img/colormenu_settings.png" align="right">
+    <p>Aby skonfigurować działanie ColorMenu użyj podmenu Ustawienia. </p>
+    <a class="w3-button w3-round w3-lime w3-tiny" href="config://.config/colormenu/colormenu.cfg">Edytuj plik konfiguracyjny</a>
+    <a class="w3-button w3-round w3-lime w3-tiny" href="run://pcmanfm ~/.config/colormenu/">Otwórz katalog z konfiguracją</a>
+  </section>
+</div>
+
+<script>
+function openTab(evt, tabName) {
+  var i, x, tablinks;
+  x = document.getElementsByClassName("tab");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < x.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" w3-gray", ""); 
+  }
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " w3-gray";
+}
+function myFunction() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
+</body>
+</html>
+
