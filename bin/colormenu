@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Copyright (C) Daniel Napora 2021-22 <napcok@gmail.com>
-# Dependencies: jgmenu, xdotool, xcolor, gcolor3, gpick, pastel, xdg-utils, xclip, notify-send
+# Dependencies: jgmenu, xdotool, gcolor3, gpick, pastel, xdg-utils, xclip, notify-send
 # TODO export to .gpl (GIMP,Inkscape)
 
-VERSION="1.0.3"
+VERSION="1.0.4"
 TEMP_DIR=/tmp/colormenu
 ME=${0##*/}
 
@@ -24,8 +24,6 @@ action=copy
 expose=wallpaper
 #Show HTML colors? yes|no
 htmlcolors=yes
-#Color picker (gpick or xcolor)
-picker=gpick
 #Show built in palettes? (slow)
 builtin_palettes=yes
 # Random wallpaper dir
@@ -60,14 +58,8 @@ hex2rgba() {
     echo "rgba($r, $g, $b, 1.0)"
 }
 pickcolor() {
-    size=${xcolor_preview_size:-255}
-    scale=${xcolor_scale:-8}
     picker=${picker:-gpick}
-    if [ "$picker" == "gpick" ]; then
     command="gpick -pso 2>/dev/null"
-    else
-    command="xcolor --preview-size ${size} --scale ${scale}"
-    fi
     color="$(${command})"
     if [ -n "${color}" ]; then
     echo "$color " > "$RECENT".tmp
@@ -78,7 +70,7 @@ pickcolor() {
     echo "$color " >> "$file"
     setvar expose=picked
     fi
-    $ME
+    colormenu
 }
 
 addcolor() {
@@ -559,7 +551,7 @@ out2+=("^sep()")
 out2+=("<tt>$(printf "%-20s %20s" "$EXPOSE" "[<b>$expose</b>]")</tt>,^checkout(expose)")
 out2+=("<tt>$(printf "%-20s %20s" "$HTMLCOLORS" "[<b>$htmlcolors</b>]")</tt>,^checkout(showhtml)")
 out2+=("<tt>$(printf "%-20s %20s" "$BUILTIN" "[<b>$builtin_palettes</b>]")</tt>,^checkout(builtinpalettes)")
-out2+=("<tt>$(printf "%-20s %20s" "$PICKER" "[<b>$picker</b>]")</tt>,^checkout(picker)")
+#out2+=("<tt>$(printf "%-20s %20s" "$PICKER" "[<b>$picker</b>]")</tt>,^checkout(picker)")
 out2+=("^sep()")
 out2+=("<tt>$(printf "%-20s %20s" "$POSITION" "[<b>$position</b>]")</tt>,^checkout(position)")
 out2+=("^sep()")
@@ -596,10 +588,10 @@ out2+=("^sep($BUILT)")
 out2+=("yes,$ME setvar builtin_palettes=yes;$ME")
 out2+=("no,$ME setvar builtin_palettes=no;$ME")
 
-out2+=("^tag(picker)")
-out2+=("^sep($COLORPICKER)")
-out2+=("gpick,$ME setvar picker=gpick;$ME")
-out2+=("xcolor,$ME setvar picker=xcolor;$ME")
+#out2+=("^tag(picker)")
+#out2+=("^sep($COLORPICKER)")
+#out2+=("gpick,$ME setvar picker=gpick;$ME")
+#out2+=("xcolor,$ME setvar picker=xcolor;$ME")
 
 
 out2+=("^tag(position)")
