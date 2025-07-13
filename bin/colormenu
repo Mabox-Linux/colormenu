@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-# Copyright (C) Daniel Napora 2021-22 <napcok@gmail.com>
+#!/bin/bash
+# Copyright (C) Daniel Napora 2021-25 <dnapora@maboxlinux.org>
 # Dependencies: jgmenu, xdotool, gcolor3, gpick, pastel, xdg-utils, xclip, notify-send
 # TODO export to .gpl (GIMP,Inkscape)
 
@@ -334,18 +334,30 @@ case "$expose" in
     wallpaper)
         WALLPALDIR="$HOME/.config/colormenu/palettes/wallp"
         mkdir -p "$WALLPALDIR"
-        read WALLPATH<<< $(grep file "$HOME/.config/nitrogen/bg-saved.cfg" | cut -d'=' -f2)
-        WALLPAPER=${WALLPATH##*/}
-        if [ ! -f "$WALLPALDIR/$WALLPAPER.clr" ]; then
-        convert ${WALLPATH} -resize 25% -colors 16 -unique-colors txt:- |grep -v '^#'| awk '{print substr($3,1,7)}' |pastel sort-by brightness |pastel format hex > "$WALLPALDIR/$WALLPAPER.clr"
-        fi
-        #mapfile -t wallcolors < "$WALLPALDIR/$WALLPAPER.clr"
-        out+=("^sep(<i><small>$WALLCOLORS</small></i>)")
+        read WALLPATH<<< $(grep file "$HOME/.config/nitrogen/bg-saved.cfg" |tail -1| cut -d'=' -f2)
+        NAME=${WALLPATH////_}
+if [[ "${NAME}" =~ ^_home_.* ]]; then
+n=${#HOME}
+((n++))
+NAME=${NAME:${n}}
+fi
+ext="${WALLPATH##*.}"
+#notify-send.sh "Extension" "$ext"
+
+if [ ! -f "$WALLPALDIR/${NAME}.clr" ]; then
+	if [ "$ext" == "avif" ];then
+	magick ${WALLPATH} -resize 25% /tmp/out.jpg
+	magick /tmp/out.jpg -colors 16 -unique-colors txt:- |grep -v '^#'| awk '{print substr($3,1,7)}' |pastel sort-by brightness |pastel format hex > "$WALLPALDIR/$NAME.clr"
+	else
+	magick ${WALLPATH} -resize 25% -colors 16 -unique-colors txt:- |grep -v '^#'| awk '{print substr($3,1,7)}' |pastel sort-by brightness |pastel format hex > "$WALLPALDIR/$NAME.clr"
+	fi
+fi
+        
         while read -r color name;do
             out+=("<tt><small>$color</small> <span bgcolor='$color'><sub> </sub>                  <sup> </sup></span></tt> ,$ME getcolorcode '$color'")
-        done < "$WALLPALDIR/$WALLPAPER.clr"
+        done < "$WALLPALDIR/$NAME.clr"
         out+=("^sep()")
-        out+=("$RANDWALL,nitrogen --random ${RANDWALLDIR} --set-scaled --save;$ME")
+        out+=("$RANDWALL,mbwallpaper -o;$ME")
         ;;
     *)
         if [ -f "$DATA_DIR/palettes/$expose" ];then
@@ -378,10 +390,10 @@ fi
 # WALLPAPER COLORS
 if [ "$expose" != "wallpaper" ];then
 out+=("$WALLCOLORS,^checkout(wallcolors)")
-read WALLPAPER<<< $(grep file "$HOME/.config/nitrogen/bg-saved.cfg | cut -d'=' -f2")
+read WALLPAPER<<< $(grep file "$HOME/.config/nitrogen/bg-saved.cfg | tail -1|cut -d'=' -f2")
 WALLPALDIR="$HOME/.config/colormenu/palettes/wallp"
 mkdir -p "$WALLPALDIR"
-read WALLPATH<<< $(grep file "$HOME/.config/nitrogen/bg-saved.cfg" | cut -d'=' -f2)
+read WALLPATH<<< $(grep file "$HOME/.config/nitrogen/bg-saved.cfg" |tail -1| cut -d'=' -f2)
 WALLPAPER=${WALLPATH##*/}
 if [ ! -f "$WALLPALDIR/$WALLPAPER.clr" ]; then
    convert ${WALLPATH} -resize 25% -colors 16 -unique-colors txt:- |grep -v '^#'| awk '{print substr($3,1,7)}' |pastel sort-by brightness |pastel format hex > "$WALLPALDIR/$WALLPAPER.clr"
@@ -395,7 +407,7 @@ while read -r color name;do
         out2+=("<tt><small>$color</small> <span bgcolor='$color'><sub> </sub>                  <sup> </sup></span></tt> ,$ME getcolorcode '$color'")
 done < "$WALLPALDIR/$WALLPAPER.clr"
 out2+=("^sep()")
-out2+=("$RANDWALL,nitrogen --random ${RANDWALLDIR} --set-scaled --save;$ME setvar expose=wallpaper;$ME")
+out2+=("$RANDWALL,mbwallpaper -o;$ME setvar expose=wallpaper;$ME")
 fi
 
 out1+=("$IMAGICKCOLORS,colormenu imagick")
