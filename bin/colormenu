@@ -74,7 +74,7 @@ pickcolor() {
 }
 
 addcolor() {
-    color=$(gcolor3)
+    color=$(gcolor3 2>/dev/null)
     if [ -n "${color}" ]; then
     echo "$color " > "$RECENT".tmp
     # add on top deduplicate
